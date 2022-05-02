@@ -4,31 +4,43 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../source/cbfifo.c \
+../source/command_processor.c \
 ../source/dac.c \
+../source/hexdump.c \
 ../source/main.c \
 ../source/mtb.c \
 ../source/semihost_hardfault.c \
 ../source/sin.c \
 ../source/systick.c \
-../source/tone_to_sample.c 
+../source/tone_to_sample.c \
+../source/uart0.c 
 
 OBJS += \
+./source/cbfifo.o \
+./source/command_processor.o \
 ./source/dac.o \
+./source/hexdump.o \
 ./source/main.o \
 ./source/mtb.o \
 ./source/semihost_hardfault.o \
 ./source/sin.o \
 ./source/systick.o \
-./source/tone_to_sample.o 
+./source/tone_to_sample.o \
+./source/uart0.o 
 
 C_DEPS += \
+./source/cbfifo.d \
+./source/command_processor.d \
 ./source/dac.d \
+./source/hexdump.d \
 ./source/main.d \
 ./source/mtb.d \
 ./source/semihost_hardfault.d \
 ./source/sin.d \
 ./source/systick.d \
-./source/tone_to_sample.d 
+./source/tone_to_sample.d \
+./source/uart0.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

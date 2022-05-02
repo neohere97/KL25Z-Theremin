@@ -1,0 +1,7 @@
+C:\Users\shala\Documents\MCUXpressoIDE_11.5.0_7232\workspace\PESFinalProject\CMSIS/core_cm0plus.h:745:22:NVIC_EnableIRQ	16	static
+C:\Users\shala\Documents\MCUXpressoIDE_11.5.0_7232\workspace\PESFinalProject\CMSIS/core_cm0plus.h:756:22:NVIC_DisableIRQ	16	static
+../source/cbfifo.c:34:8:cbfifo_enqueue	40	static
+../source/cbfifo.c:60:8:cbfifo_dequeue	40	static
+../source/cbfifo.c:114:8:cbfifo_length	16	static
+../source/cbfifo.c:125:8:cbfifo_capacity	8	static
+../source/cbfifo.c:136:6:cbfifo_reset	16	static

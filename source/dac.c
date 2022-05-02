@@ -10,6 +10,7 @@
 
 #include "dac.h"
 #include <stdint.h>
+#include <stdio.h>
 #include "MKL25Z4.h"
 #include "core_cm0plus.h"
 #include <string.h>
@@ -20,7 +21,7 @@
 static uint16_t samples_buffer[BUFF_SIZE];
 static uint32_t count = 0;
 
-
+extern volatile uint8_t continue_playing_flag;
 // ------------------------------------------------init_dac----------------------------------------------------------
 /***********************************************************************************
  * function : initialize dac peripheral
@@ -136,6 +137,13 @@ void DMA0_IRQHandler(void)
 {
 	// clearing the flag and restarting the dma transfer
 	DMA0->DMA[0].DSR_BCR |= DMA_DSR_BCR_DONE_MASK;
-	start_tone();
+	
+	if(continue_playing_flag){
+	start_tone();	
+	}
+}
+
+void reset_dma(){
+	DMAMUX0->CHCFG[0] = DMAMUX_CHCFG_SOURCE(54);
 }
 // ------------------------------------------------End----------------------------------------------------------

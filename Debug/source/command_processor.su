@@ -1,0 +1,6 @@
+../source/command_processor.c:78:6:start_command_processor	112	static
+../source/command_processor.c:97:13:line_accumulator	32	static
+../source/command_processor.c:162:13:process_command	88	static
+../source/command_processor.c:230:13:handle_author	16	static
+../source/command_processor.c:241:13:handle_help	24	static
+../source/command_processor.c:257:13:handle_play	2144	static
