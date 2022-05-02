@@ -4,42 +4,30 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../source/adc.c \
-../source/analysis.c \
-../source/autocorrelate.c \
 ../source/dac.c \
 ../source/main.c \
 ../source/mtb.c \
 ../source/semihost_hardfault.c \
 ../source/sin.c \
 ../source/systick.c \
-../source/test_sin.c \
 ../source/tone_to_sample.c 
 
 OBJS += \
-./source/adc.o \
-./source/analysis.o \
-./source/autocorrelate.o \
 ./source/dac.o \
 ./source/main.o \
 ./source/mtb.o \
 ./source/semihost_hardfault.o \
 ./source/sin.o \
 ./source/systick.o \
-./source/test_sin.o \
 ./source/tone_to_sample.o 
 
 C_DEPS += \
-./source/adc.d \
-./source/analysis.d \
-./source/autocorrelate.d \
 ./source/dac.d \
 ./source/main.d \
 ./source/mtb.d \
 ./source/semihost_hardfault.d \
 ./source/sin.d \
 ./source/systick.d \
-./source/test_sin.d \
 ./source/tone_to_sample.d 
 
 

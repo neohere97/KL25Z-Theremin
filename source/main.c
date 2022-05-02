@@ -15,7 +15,6 @@
 #include "peripherals.h"
 #include "pin_mux.h"
 #include "clock_config.h"
-
 #include "dac.h"
 #include "systick.h"
 #include "tone_to_sample.h"
