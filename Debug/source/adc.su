@@ -1,0 +1,4 @@
+../source/adc.c:24:6:init_tpm1	16	static
+../source/adc.c:42:6:init_adc	8	static
+../source/adc.c:68:6:fill_adc_buff	24	static
+../source/adc.c:95:6:caliberate_adc	16	static

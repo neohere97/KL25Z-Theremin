@@ -1,0 +1,6 @@
+C:\Users\shala\Documents\MCUXpressoIDE_11.5.0_7232\workspace\PESFinalProject\CMSIS/core_cm0plus.h:804:22:NVIC_SetPriority	24	static
+../source/systick.c:28:6:init_systick	8	static
+../source/systick.c:48:6:reset_timer	8	static
+../source/systick.c:57:12:get_timer	8	static
+../source/systick.c:66:12:Now	8	static
+../source/systick.c:75:6:SysTick_Handler	8	static

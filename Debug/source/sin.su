@@ -1,0 +1,2 @@
+../source/sin.c:28:9:get_interpolated_value	32	static
+../source/sin.c:44:9:get_sin_val	56	static
