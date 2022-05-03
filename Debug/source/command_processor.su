@@ -4,4 +4,4 @@
 ../source/command_processor.c:235:13:handle_author	16	static
 ../source/command_processor.c:246:13:handle_help	24	static
 ../source/command_processor.c:263:13:handle_play	2224	static
-../source/command_processor.c:350:13:handle_motionplay	2096	static
+../source/command_processor.c:356:13:handle_motionplay	2096	static

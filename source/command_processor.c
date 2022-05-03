@@ -305,6 +305,10 @@ static void handle_play(int no_commands, char *command_list[])
     // delay is the time period for which a particular tone is played
     int delay;
 
+    //converting lower case notes to upper case
+    if(*note >= 0x61)
+      *note = *note - 0x20;
+    
     // Checking the first letter of the note command to find the note
     // And generating respective samples for that note
     if (*note == 'A')
@@ -322,6 +326,8 @@ static void handle_play(int no_commands, char *command_list[])
     else if (*note == 'G')
       total_samples = tone_to_samples(G, dac_buff, BUFF_SIZE);
 
+    printf("\n\r Playing Note -> %c \n\r", *note);
+
     // converting the time period from string to number
     sscanf(++note, "%d", &delay);
 
@@ -331,7 +337,7 @@ static void handle_play(int no_commands, char *command_list[])
     // Get DMA and DAC working
     buffer_data_copy(dac_buff, total_samples);
     start_tone();
-    
+
     // Wait for time period specified by the user
     reset_timer();
     while (get_timer() < delay)
@@ -349,6 +355,8 @@ static void handle_play(int no_commands, char *command_list[])
  ***********************************************************************************/
 static void handle_motionplay(int no_commands, char *command_list[])
 {
+  printf("\n\r  Motionplay is activated, to exit this mode please reset the microcontroller \n\r");
+
   uint8_t roll_f, pitch_f;
 
   // All the available notes
