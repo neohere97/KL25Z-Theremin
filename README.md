@@ -62,13 +62,25 @@ Accelerometer was configured to detect pitch and roll using example code from De
  - Stop Bits - 2
  - No Parity
 
+**Peripherals & Technologies Used**
+
+ - Systick
+ - TPM0
+ - Accelerometer
+ - DAC
+ - UART
+ - I2C
+ - Command Processor
+ - DMA
+ - Interrupts(NVIC)
+ - Integer Math
+
  
  
 ## Results
 
  Both the project goals set during the project proposal have been met. The demo video is available on YouTube.
- 
- ![Alt text](../master/play_screenshot.png)
+![Alt text](../master/play_screenshot.png)
 
 ## Testing
 
