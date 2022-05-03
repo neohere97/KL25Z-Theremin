@@ -1,5 +1,5 @@
 /***************************************************************************
- * PES Assignment : Getting in Tune
+ * PES Final Project
  * Author: Chinmay Shalawadi
  * Institution: University of Colorado Boulder
  * Mail id: chsh1552@colorado.edu

@@ -1,9 +1,9 @@
 /***************************************************************************
- * Breakfast Serial
+ * PES Final Project
  * Author: Chinmay Shalawadi
  * Institution: University of Colorado Boulder
  * Mail id: chsh1552@colorado.edu
- * References: lecture slides & White Textbook & Assignment 1 (Hexdump)
+ * References: Dean Textbook & Assignment 7 (Getting In Tune)
  ***************************************************************************/
 
 #include "command_processor.h"
@@ -25,7 +25,6 @@
 #define SPACE 0x20
 #define BACKSPACE 0x8
 #define COMMA 0x2C
-
 
 // Frequency tones map
 #define A (440)
@@ -65,7 +64,7 @@ typedef struct
 static const command_table_t commands[] = {
     {"author,", handle_author, "Prints Author's Name"},
     {"help,", handle_help, "Lists all the commands supported"},
-    {"play", handle_play, "plays tones in the order they're listed, Ex 'play A400,C500'"},
+    {"play", handle_play, "plays tones in the order they're listed, Ex 'play A400,C500'. Time in Milliseconds"},
     {"motionplay,", handle_motionplay, "Changes the tone automatically based on pitch and roll data from accelerometer"}
 
 };
@@ -263,6 +262,7 @@ static void handle_help(int no_commands, char *command_list[])
  ***********************************************************************************/
 static void handle_play(int no_commands, char *command_list[])
 {
+  // DAC buffer variables
   uint16_t total_samples;
   uint16_t dac_buff[BUFF_SIZE];
 
@@ -273,8 +273,9 @@ static void handle_play(int no_commands, char *command_list[])
   // find end of string
   for (end = command_list[1]; *end != '\0'; end++)
     ;
-  // Tokenize input in place
-  char *music_notes[10];
+  // Tokenize input in place, maximum 30 notes,
+  // that's the limit for 100 character command line
+  char *music_notes[30];
   int no_notes = 0;
 
   // initializing all the values to 0
@@ -294,13 +295,18 @@ static void handle_play(int no_commands, char *command_list[])
     }
   }
 
-  
+  // DMA repeat enable, so that tone continues playing
   continue_playing_flag = 1;
+
   for (int i = 0; i < no_notes; i++)
   {
     char *note = music_notes[i];
+
+    // delay is the time period for which a particular tone is played
     int delay;
 
+    // Checking the first letter of the note command to find the note
+    // And generating respective samples for that note
     if (*note == 'A')
       total_samples = tone_to_samples(A, dac_buff, BUFF_SIZE);
     else if (*note == 'B')
@@ -316,12 +322,17 @@ static void handle_play(int no_commands, char *command_list[])
     else if (*note == 'G')
       total_samples = tone_to_samples(G, dac_buff, BUFF_SIZE);
 
+    // converting the time period from string to number
     sscanf(++note, "%d", &delay);
 
+    // calculating actual delay
     delay /= 10;
+
     // Get DMA and DAC working
     buffer_data_copy(dac_buff, total_samples);
     start_tone();
+    
+    // Wait for time period specified by the user
     reset_timer();
     while (get_timer() < delay)
       ;
@@ -339,46 +350,65 @@ static void handle_play(int no_commands, char *command_list[])
 static void handle_motionplay(int no_commands, char *command_list[])
 {
   uint8_t roll_f, pitch_f;
+
+  // All the available notes
   uint16_t all_notes[7] = {A, B, C, D, E, F, G};
+  // index of the current note playing
   uint8_t current_note = 0;
+
+  // Buffer store variables
   uint16_t total_samples;
   uint16_t dac_buff[BUFF_SIZE];
 
+  // generating initial buffer
   total_samples = tone_to_samples(all_notes[current_note], dac_buff, BUFF_SIZE);
 
+  // DMA loop enable
   continue_playing_flag = 1;
 
+  // Copy generated samples to DMA buffer and start transfer
   buffer_data_copy(dac_buff, total_samples);
   start_tone();
 
+  // Enter Infinte Loop and update tones based on pitch/roll
   while (1)
   {
+    // Wait 200ms to make tone changes decipherable
     reset_timer();
     while (get_timer() < MILLISECONDS_200)
       ;
 
+    // Read accelerometer data and convert to pitch or roll status
     read_full_xyz();
     convert_xyz_to_roll_pitch();
     roll_f = (fabs(roll) > 10) ? 1 : 0;
     pitch_f = (fabs(pitch) > 10) ? 1 : 0;
 
+    // If roll is detected, play next note
     if (roll_f && !pitch_f)
     {
       if (current_note < 6)
       {
         current_note++;
+        // Generate new tone samples
         total_samples = tone_to_samples(all_notes[current_note], dac_buff, BUFF_SIZE);
+
+        // Copy Buffer to DMA buffer and start playback
         buffer_data_copy(dac_buff, total_samples);
         start_tone();
       }
     }
 
+    // If pitch is detected, play previous note
     if (pitch_f && !roll_f)
     {
       if (current_note > 0)
       {
         current_note--;
+        // Generate new tone samples
         total_samples = tone_to_samples(all_notes[current_note], dac_buff, BUFF_SIZE);
+
+        // Copy Buffer to DMA buffer and start playback
         buffer_data_copy(dac_buff, total_samples);
         start_tone();
       }

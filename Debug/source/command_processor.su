@@ -1,7 +1,7 @@
-../source/command_processor.c:84:6:start_command_processor	112	static
-../source/command_processor.c:103:13:line_accumulator	32	static
-../source/command_processor.c:168:13:process_command	88	static
-../source/command_processor.c:236:13:handle_author	16	static
-../source/command_processor.c:247:13:handle_help	24	static
-../source/command_processor.c:264:13:handle_play	2144	static
-../source/command_processor.c:339:13:handle_motionplay	2096	static
+../source/command_processor.c:83:6:start_command_processor	112	static
+../source/command_processor.c:102:13:line_accumulator	32	static
+../source/command_processor.c:167:13:process_command	88	static
+../source/command_processor.c:235:13:handle_author	16	static
+../source/command_processor.c:246:13:handle_help	24	static
+../source/command_processor.c:263:13:handle_play	2224	static
+../source/command_processor.c:350:13:handle_motionplay	2096	static

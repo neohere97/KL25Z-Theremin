@@ -1,5 +1,5 @@
 /***************************************************************************
- * Getting In Tune
+ * PES Final Project
  * Author: Chinmay Shalawadi
  * Institution: University of Colorado Boulder
  * Mail id: chsh1552@colorado.edu
@@ -22,6 +22,7 @@ static uint16_t samples_buffer[BUFF_SIZE];
 static uint32_t count = 0;
 
 extern volatile uint8_t continue_playing_flag;
+
 // ------------------------------------------------init_dac----------------------------------------------------------
 /***********************************************************************************
  * function : initialize dac peripheral
@@ -138,11 +139,17 @@ void DMA0_IRQHandler(void)
 	// clearing the flag and restarting the dma transfer
 	DMA0->DMA[0].DSR_BCR |= DMA_DSR_BCR_DONE_MASK;
 	
+	// Global flag to control repeated playback of tone
 	if(continue_playing_flag){
 	start_tone();	
 	}
 }
-
+// ------------------------------------------------reset-dma---------------------------------------------------------
+/***********************************************************************************
+ * function : Resets DMA to initial state, turning it off
+ * parameters : none
+ * return : none
+ ***********************************************************************************/
 void reset_dma(){
 	DMAMUX0->CHCFG[0] = DMAMUX_CHCFG_SOURCE(54);
 }

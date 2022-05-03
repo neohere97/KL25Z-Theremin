@@ -1,5 +1,5 @@
 /***************************************************************************
- * Getting In Tune
+ * PES Final Project
  * Author: Chinmay Shalawadi
  * Institution: University of Colorado Boulder
  * Mail id: chsh1552@colorado.edu
@@ -10,7 +10,6 @@
 #define DAC_H_
 
 #include <stdint.h>
-
 
 #define BUFF_SIZE (1024)
 
@@ -54,5 +53,11 @@ void buffer_data_copy(uint16_t *sample_buf, uint32_t sample_count);
  ***********************************************************************************/
 void start_tone();
 
+// ------------------------------------------------reset-dma---------------------------------------------------------
+/***********************************************************************************
+ * function : Resets DMA to initial state, turning it off
+ * parameters : none
+ * return : none
+ ***********************************************************************************/
 void reset_dma();
 #endif
