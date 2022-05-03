@@ -1,5 +1,5 @@
 /***************************************************************************
- * Getting In Tune
+ * PES Final Project
  * Author: Chinmay Shalawadi
  * Institution: University of Colorado Boulder
  * Mail id: chsh1552@colorado.edu
@@ -37,8 +37,6 @@ int main(void)
     BOARD_InitBootClocks();
     BOARD_InitBootPeripherals();
 
-    
-
     // Initialize all peripherals
     init_systick();   
     i2c_init();
@@ -47,6 +45,8 @@ int main(void)
     init_dac();
     init_dma();
     init_tpm0();
+
+    //Start Command Processor
     start_command_processor();
     
    return 0;
