@@ -24,6 +24,8 @@ References -> Lecture Slides ,Dean & White Text Book, Disassembly from MCUXpress
 ![Alt text](../master/AudioOutSetup.png)
 ## Implementation Details 
 Music Notes Supported. Frequency data used from https://pages.mtu.edu/~suits/notefreqs.html. 
+
+
   `A,B,C,D,E,F,G (The octaves have been chosen such that there is a linear increase in frequency)`
 
  - Command Processor from Assignment 6 (Breakfast Serial), has been modified to add 2 new commands. **'play'** & **'motionplay'**  . Below are the example usage of both commands and their description.
