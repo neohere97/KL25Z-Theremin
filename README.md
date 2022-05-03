@@ -1,3 +1,3 @@
 # PESFinalProject
 
-![Alt text](../main/AudioOutSetup.png)
+![Alt text](../master/AudioOutSetup.png)
