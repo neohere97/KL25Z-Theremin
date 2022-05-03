@@ -19,8 +19,11 @@
 #include "tone_to_sample.h"
 #include "command_processor.h"
 #include "uart0.h"
+#include "i2c.h"
+#include "mma8451.h"
+#include <math.h>
 
-
+// extern float roll, pitch;
 
 // ------------------------------------------------Main------------------------------------------------------------
 /***********************************************************************************
@@ -37,7 +40,9 @@ int main(void)
     
 
     // Initialize all peripherals
-    init_systick();
+    init_systick();   
+    i2c_init();
+    init_mma();
     uart_init();
     init_dac();
     init_dma();

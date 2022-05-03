@@ -14,7 +14,7 @@ source/command_processor.o source/command_processor.d: \
  C:\Users\shala\Documents\MCUXpressoIDE_11.5.0_7232\workspace\PESFinalProject\drivers/fsl_common.h \
  ../source/tone_to_sample.h ../source/dac.h \
  C:\Users\shala\Documents\MCUXpressoIDE_11.5.0_7232\workspace\PESFinalProject\CMSIS/MKL25Z4.h \
- ../source/systick.h
+ ../source/systick.h ../source/mma8451.h
 ../source/command_processor.h:
 C:\Users\shala\Documents\MCUXpressoIDE_11.5.0_7232\workspace\PESFinalProject\utilities/fsl_debug_console.h:
 C:\Users\shala\Documents\MCUXpressoIDE_11.5.0_7232\workspace\PESFinalProject\drivers/fsl_common.h:
@@ -32,3 +32,4 @@ C:\Users\shala\Documents\MCUXpressoIDE_11.5.0_7232\workspace\PESFinalProject\dri
 ../source/dac.h:
 C:\Users\shala\Documents\MCUXpressoIDE_11.5.0_7232\workspace\PESFinalProject\CMSIS/MKL25Z4.h:
 ../source/systick.h:
+../source/mma8451.h:

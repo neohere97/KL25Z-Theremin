@@ -7,8 +7,9 @@ C_SRCS += \
 ../source/cbfifo.c \
 ../source/command_processor.c \
 ../source/dac.c \
-../source/hexdump.c \
+../source/i2c.c \
 ../source/main.c \
+../source/mma8451.c \
 ../source/mtb.c \
 ../source/semihost_hardfault.c \
 ../source/sin.c \
@@ -20,8 +21,9 @@ OBJS += \
 ./source/cbfifo.o \
 ./source/command_processor.o \
 ./source/dac.o \
-./source/hexdump.o \
+./source/i2c.o \
 ./source/main.o \
+./source/mma8451.o \
 ./source/mtb.o \
 ./source/semihost_hardfault.o \
 ./source/sin.o \
@@ -33,8 +35,9 @@ C_DEPS += \
 ./source/cbfifo.d \
 ./source/command_processor.d \
 ./source/dac.d \
-./source/hexdump.d \
+./source/i2c.d \
 ./source/main.d \
+./source/mma8451.d \
 ./source/mtb.d \
 ./source/semihost_hardfault.d \
 ./source/sin.d \

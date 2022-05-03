@@ -17,12 +17,16 @@
 #include <string.h>
 #include "MKL25Z4.h"
 #include "systick.h"
+#include "mma8451.h"
+#include <math.h>
 
 // Print character definitions
 #define CR 0xD
 #define SPACE 0x20
 #define BACKSPACE 0x8
 #define COMMA 0x2C
+
+
 // Frequency tones map
 #define A (440)
 #define B (496)
@@ -32,7 +36,7 @@
 #define F (700)
 #define G (784)
 
-#define ONE_SECOND (100) // 100 count measures to 1 sec, since we get timer interrupt at appx every 10ms
+#define MILLISECONDS_200 (20) // 10 count measures to 100 millisec, since we get timer interrupt at appx every 10ms
 
 #define LINEBUFFER_LENGTH 100
 
@@ -40,6 +44,7 @@
 static void handle_author(int no_commands, char *command_list[]);
 static void handle_help(int no_commands, char *command_list[]);
 static void handle_play(int no_commands, char *command_list[]);
+static void handle_motionplay(int no_commands, char *command_list[]);
 static void process_command(char *input);
 static void line_accumulator(char line[]);
 
@@ -58,9 +63,10 @@ typedef struct
 // New commands can be added very easily by adding an entry to the table
 // and adding a command handler function
 static const command_table_t commands[] = {
-    {"author", handle_author, "Prints Author's Name"},
-    {"help", handle_help, "Lists all the commands supported"},
-    {"play", handle_play, "plays tones in the order they're listed"}
+    {"author,", handle_author, "Prints Author's Name"},
+    {"help,", handle_help, "Lists all the commands supported"},
+    {"play", handle_play, "plays tones in the order they're listed, Ex 'play A400,C500'"},
+    {"motionplay,", handle_motionplay, "Changes the tone automatically based on pitch and roll data from accelerometer"}
 
 };
 
@@ -247,21 +253,23 @@ static void handle_help(int no_commands, char *command_list[])
     printf("%s\n\n\r", commands[i].help_string);
   }
 }
-// ------------------------------------------------handle-help-----------------------------------------------------------
+// ------------------------------------------------handle-play-----------------------------------------------------------
 /***********************************************************************************
- * function : Prints all the commands with their help text
+ * function : Plays all the tones in the order user specifies and time period
+ *            specified by the user
  * parameters : no_commands -> count variable of command array
  *              command_list -> pointers to list of commands
  * return : none
  ***********************************************************************************/
 static void handle_play(int no_commands, char *command_list[])
-{  
+{
   uint16_t total_samples;
   uint16_t dac_buff[BUFF_SIZE];
 
   char *p = command_list[1];
   char *end;
   char *temp;
+
   // find end of string
   for (end = command_list[1]; *end != '\0'; end++)
     ;
@@ -272,11 +280,11 @@ static void handle_play(int no_commands, char *command_list[])
   // initializing all the values to 0
   memset(music_notes, 0, sizeof(music_notes));
 
-  // temp used to store locations of every word start
+  // temp used to store locations of every music note start
   temp = command_list[1];
   for (p = command_list[1]; p < end; p++)
   {
-    // Replacing the space character with \0 and storing the pointer to the begining
+    // Replacing the comma in notes list with \0 and storing the pointer to the begining
     // in the command_list array
     if (*p == COMMA)
     {
@@ -286,11 +294,11 @@ static void handle_play(int no_commands, char *command_list[])
     }
   }
 
-  // change frequency every one second
+  
   continue_playing_flag = 1;
   for (int i = 0; i < no_notes; i++)
   {
-    char* note = music_notes[i];
+    char *note = music_notes[i];
     int delay;
 
     if (*note == 'A')
@@ -308,7 +316,7 @@ static void handle_play(int no_commands, char *command_list[])
     else if (*note == 'G')
       total_samples = tone_to_samples(G, dac_buff, BUFF_SIZE);
 
-    sscanf(++note,"%d", &delay);
+    sscanf(++note, "%d", &delay);
 
     delay /= 10;
     // Get DMA and DAC working
@@ -320,5 +328,61 @@ static void handle_play(int no_commands, char *command_list[])
   }
   continue_playing_flag = 0;
   reset_dma();
+}
+// ------------------------------------------------handle-motionplay-----------------------------------------------------------
+/***********************************************************************************
+ * function : uses the accelerometer data to change the tones
+ * parameters : no_commands -> count variable of command array
+ *              command_list -> pointers to list of commands
+ * return : none
+ ***********************************************************************************/
+static void handle_motionplay(int no_commands, char *command_list[])
+{
+  uint8_t roll_f, pitch_f;
+  uint16_t all_notes[7] = {A, B, C, D, E, F, G};
+  uint8_t current_note = 0;
+  uint16_t total_samples;
+  uint16_t dac_buff[BUFF_SIZE];
+
+  total_samples = tone_to_samples(all_notes[current_note], dac_buff, BUFF_SIZE);
+
+  continue_playing_flag = 1;
+
+  buffer_data_copy(dac_buff, total_samples);
+  start_tone();
+
+  while (1)
+  {
+    reset_timer();
+    while (get_timer() < MILLISECONDS_200)
+      ;
+
+    read_full_xyz();
+    convert_xyz_to_roll_pitch();
+    roll_f = (fabs(roll) > 10) ? 1 : 0;
+    pitch_f = (fabs(pitch) > 10) ? 1 : 0;
+
+    if (roll_f && !pitch_f)
+    {
+      if (current_note < 6)
+      {
+        current_note++;
+        total_samples = tone_to_samples(all_notes[current_note], dac_buff, BUFF_SIZE);
+        buffer_data_copy(dac_buff, total_samples);
+        start_tone();
+      }
+    }
+
+    if (pitch_f && !roll_f)
+    {
+      if (current_note > 0)
+      {
+        current_note--;
+        total_samples = tone_to_samples(all_notes[current_note], dac_buff, BUFF_SIZE);
+        buffer_data_copy(dac_buff, total_samples);
+        start_tone();
+      }
+    }
+  }
 }
 // ------------------------------------------------End------------------------------------------------------------
