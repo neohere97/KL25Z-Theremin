@@ -36,7 +36,7 @@ Music Notes Supported. Frequency data used from https://pages.mtu.edu/~suits/not
 
 	    play A200,B300,C800,G900,D900
 	    
-The above command plays the note A for 300msec, B for 500msec, C for 400msec and lastly F for 900msec.
+The above command plays the notes as shown in the image below.
 
 ![Alt text](../master/play_screenshot.png)
 
