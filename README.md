@@ -67,6 +67,8 @@ Accelerometer was configured to detect pitch and roll using example code from De
 ## Results
 
  Both the project goals set during the project proposal have been met. The demo video is available on YouTube.
+ 
+ ![Alt text](../master/play_screenshot.png)
 
 ## Testing
 
