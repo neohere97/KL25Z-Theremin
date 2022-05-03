@@ -34,9 +34,12 @@ Music Notes Supported. Frequency data used from https://pages.mtu.edu/~suits/not
  - Command Processor from Assignment 6 (Breakfast Serial), has been modified to add 2 new commands. **'play'** & **'motionplay'**  . Below are the example usage of both commands and their description.
  
 
-	    play A300,B500,C400,F900
+	    play A200,B300,C800,G900,D900
 	    
 The above command plays the note A for 300msec, B for 500msec, C for 400msec and lastly F for 900msec.
+
+![Alt text](../master/play_screenshot.png)
+
 A list of notes are made by splitting them using the comma. 
 Time in msec needs to be a minimum 10msec and there is no check for upper bound. 
 The notes can be upper case or lower case.
@@ -80,7 +83,7 @@ Accelerometer was configured to detect pitch and roll using example code from De
 ## Results
 
  Both the project goals set during the project proposal have been met. The demo video is available on YouTube.
-![Alt text](../master/play_screenshot.png)
+
 
 ## Testing
 
